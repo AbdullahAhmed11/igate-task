@@ -12,7 +12,6 @@ type Product = {
   title: string;
   price: number;
   thumbnail: string;
-  // add more fields if needed (description, category, etc.)
 };
 
 export default function Home() {
