@@ -1,15 +1,22 @@
-'use client'
+'use client';
 import Image from 'next/image';
 
-export default function ProductCard({ product }: { product: any }) {
+type Product = {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+};
+
+export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform duration-200 hover:scale-105 hover:shadow-xl">
       <div className="relative w-full h-52">
         <Image
-          src={product.thumbnail} // Image source URL
-          alt={product.title} // Alt text for accessibility
-          layout="fill" // Ensures the image takes up the full container space
-          objectFit="cover" // Ensures the image covers the container without stretching
+          src={product.thumbnail}
+          alt={product.title}
+          layout="fill"
+          objectFit="cover"
         />
       </div>
       <div className="p-4">

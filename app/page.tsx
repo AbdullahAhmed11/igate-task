@@ -7,9 +7,16 @@ import PaginationControls from "@/app/components/PaginationControls";
 import { fetchProducts, fetchCategories } from "@/app/utils/api";
 
 const PRODUCTS_PER_PAGE = 10;
+type Product = {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+  // add more fields if needed (description, category, etc.)
+};
 
 export default function Home() {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState<string>("");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -33,6 +40,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchAllData();
+    console.log(categories,"Fetching products and categories...");
   }, [category, priceRange, currentPage]);
 
   return (
