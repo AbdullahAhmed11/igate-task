@@ -1,6 +1,17 @@
 import ProductCard from "./ProductCard";
 
-export default function ProductList({ products }: { products: any[] }) {
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+}
+
+interface ProductListProps {
+  products: Product[];
+}
+
+export default function ProductList({ products }: ProductListProps) {
   if (!products.length) return <p className="text-center">No products found.</p>;
 
   return (

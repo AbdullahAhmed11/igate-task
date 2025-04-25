@@ -9,15 +9,34 @@ const api = axios.create({
   },
 });
 
-export const fetchProducts = async (category: string, skip: number, limit: number, priceRange: [number, number]) => {
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+  category: string;
+  description: string;
+}
+
+interface ProductsResponse {
+  products: Product[];
+  total: number;
+}
+
+export const fetchProducts = async (
+  category: string,
+  skip: number,
+  limit: number,
+  priceRange: [number, number]
+): Promise<{ products: Product[]; total: number }> => {
   try {
     let url = `/products?limit=${limit}&skip=${skip}`;
     if (category) {
       url = `/products/category/${category}?limit=${limit}&skip=${skip}`;
     }
-    const response = await api.get(url);
-    const filteredProducts = response.data.products.filter((product: any) => 
-      product.price >= priceRange[0] && product.price <= priceRange[1]
+    const response = await api.get<ProductsResponse>(url);
+    const filteredProducts = response.data.products.filter(
+      (product) => product.price >= priceRange[0] && product.price <= priceRange[1]
     );
     return { products: filteredProducts, total: response.data.total };
   } catch (error) {
@@ -25,10 +44,10 @@ export const fetchProducts = async (category: string, skip: number, limit: numbe
   }
 };
 
-export const fetchCategories = async () => {
+export const fetchCategories = async (): Promise<string[]> => {
   try {
-    const response = await api.get('/products/categories');
-    return response.data;
+    const response = await api.get<{ categories: string[] }>('/products/categories');
+    return response.data.categories;
   } catch (error) {
     throw new Error(`Failed to fetch categories: ${error}`);
   }

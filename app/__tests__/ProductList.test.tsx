@@ -14,8 +14,8 @@ describe('ProductList', () => {
 
   test('renders product cards', () => {
     const products = [
-      { id: 1, title: 'Product 1' },
-      { id: 2, title: 'Product 2' }
+      { id: 1, title: 'Product 1', price: 100, thumbnail: 'thumbnail1.jpg' },
+      { id: 2, title: 'Product 2', price: 200, thumbnail: 'thumbnail2.jpg' }
     ];
     render(<ProductList products={products} />);
     expect(screen.getAllByTestId('product-card')).toHaveLength(2);
